@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 
 export default function CharacterList() {
   const [character, setCharacter] = useState([]);
-  
+  const [searchResults, setSearchResults] = useState(null);
 
   useEffect(() => {
     axios
@@ -14,16 +14,21 @@ export default function CharacterList() {
       .then(res => {
         console.log(res.data.results);
         setCharacter(res.data.results);
+        setSearchResults(res.data.results);
       })
       .catch(error => console.log(error))
   }, []);
-
+  if (!searchResults)
+  return (
+    <div>Loading</div>
+  )
+  
   return (
     <section className="character-list">
       <Link to='/'>Home</Link>
-      <SearchForm characters={character} />
+      <SearchForm setSearchResults={setSearchResults} characters={character} />
       <div className='card-container'>
-        {character.map(data => {
+        {searchResults.map(data => {
           return <CharacterCard character={data} key={data.id} name={data.name} species={data.species} status={data.status} image={data.image}/>
         })}
       </div>

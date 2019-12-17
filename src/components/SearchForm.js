@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import CharacterCard from './CharacterCard';
 
-export default function SearchForm({ characters }) {
+export default function SearchForm({ characters, setSearchResults }) {
 
   const [charSearch, setCharSearch] = useState('');
-  const [searchResults, setSearchResults] = useState(characters);
+  // const [searchResults, setSearchResults] = useState(characters);
 
   useEffect(() => {
     const results = characters.filter(character => {
@@ -31,11 +31,6 @@ export default function SearchForm({ characters }) {
         />
       </form>
 
-      <div className='card-container'>
-        {searchResults.map(character => {
-          return <CharacterCard character={character} key={character.id}/>
-        })}      
-      </div>
     </section>
   );
 }
